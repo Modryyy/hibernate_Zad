@@ -4,7 +4,7 @@ package pl.edu.wszib.db;
         import org.hibernate.cfg.Configuration;
         import pl.edu.wszib.model.Pytanie;
 
-        import javax.persistence.EntityManager;
+
         import java.util.List;
 
 public class DBConnector {
@@ -58,14 +58,13 @@ public class DBConnector {
     }
 
 
-    public static void updateQuestion(int idPytania, Pytanie pytanie) {
+    public static void updateWholeQuestion(int idPytania, Pytanie pytanie) {
         Session session = factory.openSession();
         Transaction tx = null;
-        Pytanie pytanie1;
+
         try {
             tx = session.beginTransaction();
-            pytanie1 = (Pytanie) session.load(Pytanie.class, idPytania);
-            System.out.println(pytanie.getIdPytania() +"," + pytanie.getNagroda()+"," + pytanie.getOdpowiedzi()+"," + pytanie.getPrawidlowaOdpowiedz()+"," + pytanie.getPytanie()+"," + pytanie.getClass());
+            session.load(Pytanie.class, idPytania);
             session.saveOrUpdate(pytanie);
             //wiecej operacji
             tx.commit();
@@ -76,6 +75,90 @@ public class DBConnector {
         }
 
 }
+    public static void updateQuestionReward(int idPytania, Pytanie pytanie) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Pytanie pytanie1;
+        try {
+            tx = session.beginTransaction();
+            pytanie1 = (Pytanie) session.load(Pytanie.class, idPytania);
+
+            pytanie1.setNagroda(pytanie.getNagroda());
+
+
+            session.update(pytanie1);
+            //wiecej operacji
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
+    public static void updateQuestion(int idPytania, Pytanie pytanie) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Pytanie pytanie1;
+        try {
+            tx = session.beginTransaction();
+            pytanie1 = (Pytanie) session.load(Pytanie.class, idPytania);
+
+            pytanie1.setPytanie(pytanie.getPytanie());
+
+
+            session.update(pytanie1);
+            //wiecej operacji
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
+    public static void updateAnswer(int idPytania, Pytanie pytanie) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Pytanie pytanie1;
+        try {
+            tx = session.beginTransaction();
+            pytanie1 = (Pytanie) session.load(Pytanie.class, idPytania);
+
+            pytanie1.setOdpowiedzi(pytanie.getOdpowiedzi());
+
+
+            session.update(pytanie1);
+            //wiecej operacji
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
+    public static void updateCorrectAnswer(int idPytania, Pytanie pytanie) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Pytanie pytanie1;
+        try {
+            tx = session.beginTransaction();
+            pytanie1 = (Pytanie) session.load(Pytanie.class, idPytania);
+
+            pytanie1.setPrawidlowaOdpowiedz(pytanie.getPrawidlowaOdpowiedz());
+
+
+            session.update(pytanie1);
+            //wiecej operacji
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
 
 
     public static List<Pytanie> getAllQuestions() {
