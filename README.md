@@ -1,1 +1,1 @@
-# hibernate_Zad
+# BD: test1, tabela: tmilionerzy
